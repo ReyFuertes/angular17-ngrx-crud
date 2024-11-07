@@ -1,0 +1,52 @@
+<div class="product-container">
+  <h1>Product list</h1>
+  <p-table [value]="products" [tableStyle]="{ 'min-width': '50rem' }">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Price</th>
+        <th></th>
+        <th></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-product>
+      <tr>
+        <td>{{ product?.id }}</td>
+        <td>{{ product?.name }}</td>
+        <td>{{ product?.description }}</td>
+        <td>{{ product?.price }}</td>
+        <td (click)="onEdit(product)">Edit</td>
+        <td (click)="onDelete(product)">Delete</td>
+      </tr>
+    </ng-template>
+  </p-table>
+  <p-dialog header="Header" [(visible)]="showProductDialog" [modal]="true" [style]="{ width: '25rem' }">
+    <div class="content" [formGroup]="form">
+      <div>
+        <span>Name:</span>
+        <input type="text" formControlName="name" pInputText />
+      </div>
+      <div>
+        <span>Description:</span>
+        <textarea rows="5" formControlName="description" cols="30" pInputTextarea></textarea>
+      </div>
+      <div>
+        <span>Price:</span>
+        <input type="number" formControlName="price" pInputText />
+      </div>
+
+    </div>
+    <ng-template pTemplate="footer">
+      <button pButton (click)="onUpdate()">Save</button>
+      <button pButton (click)="showProductDialog = false">Cancel</button>
+    </ng-template>
+  </p-dialog>
+  <p-confirmDialog #cd>
+    <ng-template pTemplate="footer">
+      <button pButton (click)="cd.accept()">Yes</button>
+      <button pButton (click)="cd.reject()">No</button>
+    </ng-template>
+  </p-confirmDialog>
+</div>
